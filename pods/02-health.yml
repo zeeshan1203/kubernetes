@@ -12,3 +12,9 @@ spec:
           path: /
         initialDelaySeconds: 3
         periodSeconds: 3
+      livenessProbe:
+        httpGet:
+          port: 80
+          path: /demo
+        initialDelaySeconds: 3
+        periodSeconds: 3
