@@ -43,3 +43,15 @@ spec:
               key: URL
               name: sample
               ## Above, name is name of configmap
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample3
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      envFrom:
+        - configMapRef:
+            name: sample
