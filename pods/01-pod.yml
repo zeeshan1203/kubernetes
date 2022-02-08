@@ -18,3 +18,28 @@ spec:
       env:
         - name: URL
           value: google.com
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample
+data:
+  URL: google.com
+  LOCATION: USA
+  FOUNDED_BY: Larry
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample2
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      env:
+        - name: URL
+          valueFrom:
+            configMapKeyRef:
+              key: URL
+              name: sample
+              ## Above, name is name of configmap
