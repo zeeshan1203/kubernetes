@@ -61,7 +61,7 @@ kind: Secret
 metadata:
   name: sample
 data:
-  URL: Z29vZ2xlLmNvbQo=
+  URL: Z29vZ2xlLmNvbQ==
 ---
 apiVersion: v1
 kind: Pod
