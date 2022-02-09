@@ -8,7 +8,7 @@ module "minikube" {
   aws_subnet_id       = module.vpc.public_subnets[0]
   //ami_image_id        = data.aws_ami.ami.id
   hosted_zone         = var.HOSTED_ZONE
-  hosted_zone_private = true
+  hosted_zone_private = false
 
   tags = {
     Application = "Minikube"
