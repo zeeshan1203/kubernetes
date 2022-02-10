@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+  namespace: default
+spec:
+  containers:
+    - name: centos
+      image: centos:7
+      command:
+        - sleep
+        - "100000"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample8
+  namespace: sample
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample8
+  namespace: sample
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
