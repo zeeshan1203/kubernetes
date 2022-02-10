@@ -8,4 +8,4 @@ RUN         ["echo", "Hello"]
 ## RUN instruction does not really matter in which format we use, So we will go with first approach.
 #CMD        nginx -g "daemon off;"
 CMD         ["nginx", "-g", "daemon off;"]
-EXPOSE 80
+EXPOSE      80
