@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.componentName }}
+spec:
+  selector:
+    component: {{ .Values.componentName }}
+    project: {{ include "roboshop.fullname" . }}
+    appVersion: {{ .Values.appVersion }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.appPort }}

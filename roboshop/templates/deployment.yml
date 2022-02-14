@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.componentName }}
+  labels:
+    component: {{ .Values.componentName }}
+    project: {{ include "roboshop.fullname" . }}
+    appVersion: {{ .Values.appVersion }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: {{ .Values.componentName }}
+      project: {{ include "roboshop.fullname" . }}
+      appVersion: {{ .Values.appVersion }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.componentName }}
+        project: {{ include "roboshop.fullname" . }}
+        appVersion: {{ .Values.appVersion }}
+    spec:
+      containers:
+        - name: {{ .Values.componentName }}
+          image: {{ .Values.componentName }}:{{ .Values.appVersion }}
+
