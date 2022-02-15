@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.componentName }}
   labels:
   {{- include "roboshop.labels" . | nindent 4 }}
+    appVersion: {{ .Values.appVersion }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,6 +12,7 @@ spec:
   selector:
     matchLabels:
   {{- include "roboshop.selectorLabels" . | nindent 6 }}
+      appVersion: {{ .Values.appVersion }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +21,7 @@ spec:
       {{- end }}
       labels:
     {{- include "roboshop.selectorLabels" . | nindent 8 }}
+        appVersion: {{ .Values.appVersion }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

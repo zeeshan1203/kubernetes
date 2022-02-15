@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.componentName }}
   labels:
   {{- include "roboshop.labels" . | nindent 4 }}
+    appVersion: {{ .Values.appVersion }}
 spec:
   type: {{ .Values.service.type }}
   ports:
