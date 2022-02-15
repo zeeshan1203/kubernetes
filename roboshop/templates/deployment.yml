@@ -3,23 +3,51 @@ kind: Deployment
 metadata:
   name: {{ .Values.componentName }}
   labels:
-    component: {{ .Values.componentName }}
-    project: {{ include "roboshop.fullname" . }}
-    appVersion: {{ .Values.appVersion }}
+  {{- include "roboshop.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      component: {{ .Values.componentName }}
-      project: {{ include "roboshop.fullname" . }}
-      appVersion: {{ .Values.appVersion }}
+  {{- include "roboshop.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        component: {{ .Values.componentName }}
-        project: {{ include "roboshop.fullname" . }}
-        appVersion: {{ .Values.appVersion }}
+    {{- include "roboshop.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "roboshop.serviceAccountName" . }}
+      securityContext:
+      {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Values.componentName }}
+        - name: {{ .Chart.Name }}
+          securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
           image: "420635131523.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.componentName }}:{{ .Values.appVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.appPort }}
+              protocol: TCP
+          resources:
+      {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+      {{- toYaml . | nindent 8 }}
+  {{- end }}

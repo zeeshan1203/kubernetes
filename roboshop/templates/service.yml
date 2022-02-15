@@ -2,12 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.componentName }}
+  labels:
+  {{- include "roboshop.labels" . | nindent 4 }}
 spec:
-  selector:
-    component: {{ .Values.componentName }}
-    project: {{ include "roboshop.fullname" . }}
-    appVersion: "{{ .Values.appVersion }}"
+  type: {{ .Values.service.type }}
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: {{ .Values.appPort }}
+    - port: {{ .Values.appPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+  {{- include "roboshop.selectorLabels" . | nindent 4 }}
