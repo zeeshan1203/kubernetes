@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
   {{- include "roboshop.selectorLabels" . | nindent 6 }}
-      appVersion: {{ .Values.appVersion }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,7 +20,6 @@ spec:
       {{- end }}
       labels:
     {{- include "roboshop.selectorLabels" . | nindent 8 }}
-        appVersion: {{ .Values.appVersion }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
