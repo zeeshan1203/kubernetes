@@ -6,7 +6,7 @@ spec:
   selector:
     component: {{ .Values.componentName }}
     project: {{ include "roboshop.fullname" . }}
-    appVersion: {{ .Values.appVersion }}
+    appVersion: "{{ .Values.appVersion }}"
   ports:
     - protocol: TCP
       port: 80
