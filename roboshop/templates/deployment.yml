@@ -22,5 +22,4 @@ spec:
     spec:
       containers:
         - name: {{ .Values.componentName }}
-          image: {{ .Values.componentName }}:{{ .Values.appVersion }}
-
+          image: "420635131523.dkr.ecr.us-east-1.amazonaws.com/{{ .Values.componentName }}:{{ .Values.appVersion }}"
